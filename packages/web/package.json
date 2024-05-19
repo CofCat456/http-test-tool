@@ -1,0 +1,48 @@
+{
+  "name": "http-test-tool",
+  "type": "module",
+  "version": "0.0.0",
+  "description": "HTTP request testing tool supporting GET and POST methods",
+  "author": "CofCat456 <a25690756@gmail.com>",
+  "license": "MIT",
+  "homepage": "https://github.com/CofCat456/http-test-tool#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/CofCat456/http-test-tool.git",
+    "directory": "packages/web"
+  },
+  "bugs": {
+    "url": "https://github.com/CofCat456/http-test-tool/issues"
+  },
+  "keywords": [
+    "http",
+    "get",
+    "post"
+  ],
+  "scripts": {
+    "build": "nuxi build",
+    "dev": "nuxi dev --host",
+    "start": "node .output/server/index.mjs",
+    "typecheck": "vue-tsc --noEmit"
+  },
+  "devDependencies": {
+    "@antfu/eslint-config": "^2.18.0",
+    "@iconify-json/carbon": "^1.1.33",
+    "@nuxt/eslint": "^0.3.12",
+    "@nuxt/image": "^1.7.0",
+    "@nuxtjs/color-mode": "^3.4.1",
+    "@pinia/nuxt": "^0.5.1",
+    "@types/ws": "^8.5.10",
+    "@unocss/nuxt": "^0.60.2",
+    "@vueuse/nuxt": "^10.9.0",
+    "better-sqlite3": "^9.6.0",
+    "bumpp": "^9.4.1",
+    "consola": "^3.2.3",
+    "floating-vue": "^5.2.2",
+    "nuxt": "^3.11.2",
+    "pinia": "^2.1.7",
+    "shiki": "^1.6.0",
+    "typescript": "^5.4.5",
+    "vue-tsc": "^2.0.17"
+  }
+}

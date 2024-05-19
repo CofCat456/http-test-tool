@@ -1,0 +1,40 @@
+{
+  "name": "http-test-tool-run",
+  "type": "module",
+  "version": "0.0.0",
+  "author": "CofCat456 <a25690756@gmail.com>",
+  "license": "MIT",
+  "homepage": "https://github.com/CofCat456/http-test-tool#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/CofCat456/http-test-tool.git",
+    "directory": "packages/web"
+  },
+  "bugs": {
+    "url": "https://github.com/CofCat456/http-test-tool/issues"
+  },
+  "sideEffects": false,
+  "exports": {
+    ".": {
+      "import": "./dist/index.mjs"
+    }
+  },
+  "main": "./dist/index.mjs",
+  "module": "./dist/index.mjs",
+  "files": [
+    "index.mjs"
+  ],
+  "engines": {
+    "node": "^18.0.0 || >=20.0.0"
+  },
+  "scripts": {
+    "build": "unbuild"
+  },
+  "devDependencies": {
+    "@types/prompts": "^2.4.9",
+    "kolorist": "^1.8.0",
+    "open": "^10.1.0",
+    "prompts": "^2.4.2",
+    "unbuild": "^2.0.0"
+  }
+}
