@@ -5,7 +5,7 @@ const dataStore = useDataStore()
 
 const { urlData } = storeToRefs(dataStore)
 
-const lastUpdate = useTimeAgo(() => urlData.value ? urlData.value.created_at : '')
+const lastUpdate = useTimeAgo(() => urlData.value ? useLocalTime(urlData.value.created_at) : '')
 
 function toggleDark() {
   color.preference = color.value === 'dark' ? 'light' : 'dark'

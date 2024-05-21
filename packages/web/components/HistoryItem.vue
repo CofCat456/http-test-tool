@@ -1,7 +1,7 @@
 <script setup lang="ts" generic="T">
 import type { Data } from '~/types'
 
-defineProps<Data & {
+const props = defineProps<Data & {
   index: number
   noColor?: boolean
 }>()
@@ -9,6 +9,8 @@ defineProps<Data & {
 const open = defineModel('open', {
   default: false,
 })
+
+const formatDate = useDateFormat(useLocalTime(props.created_at), 'YYYY-MM-DD HH:mm:ss').value
 
 const hasShown = ref(open.value)
 if (!hasShown.value) {
@@ -51,7 +53,6 @@ if (!hasShown.value) {
             />
           </div>
         </div>
-        <!-- <span text="gray op60">{{ createAt }}</span> -->
       </div>
     </summary>
 
@@ -60,7 +61,7 @@ if (!hasShown.value) {
         <div i-carbon-calendar flex-none />
         <div>Create Date :</div>
         <div>
-          <span badge>{{ created_at }}</span>
+          <span badge>{{ formatDate }}</span>
         </div>
       </div>
 
