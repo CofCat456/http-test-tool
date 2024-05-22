@@ -2,7 +2,7 @@
 import type { Data } from '~/types'
 
 const props = defineProps<Data & {
-  index: number
+  idx: number
   noColor?: boolean
 }>()
 
@@ -31,7 +31,7 @@ if (!hasShown.value) {
   >
     <summary block>
       <div class="absolute right-[calc(100%+10px)] top-1.5" text-right font-mono op35 lt-lg:hidden>
-        #{{ index }}
+        #{{ idx }}
       </div>
       <div flex="~ gap-2 wrap items-center" cursor-pointer select-none bg-hover px2 py2 text-sm font-mono>
         <div class="[details[open]_&]:rotate-90" i-carbon-chevron-right text-base op50 transition />
@@ -68,7 +68,7 @@ if (!hasShown.value) {
       <Shiki
         lang="ts"
         :code="stringifyUnquoted(data)"
-        max-h-100 max-w-full w-full of-scroll rounded bg-code p2 text-sm
+        max-h-100 max-w-full w-full of-auto rounded bg-code p2 text-sm
       />
       <Copy absolute bottom-0 right-0 top-0 op50 :text="JSON.stringify(data, null, 2)" />
     </div>

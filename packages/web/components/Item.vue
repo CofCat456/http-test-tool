@@ -43,7 +43,7 @@ if (!hasShown.value) {
         <Shiki
           lang="ts"
           :code="stringifyUnquoted(value)"
-          max-h-100 max-w-full w-full of-scroll rounded bg-code p2 text-sm
+          max-h-100 max-w-full w-full of-auto rounded bg-code p2 text-sm
         />
         <Copy absolute bottom-0 right-2 top-2 op50 :text="JSON.stringify(value, null, 4)" />
       </template>
