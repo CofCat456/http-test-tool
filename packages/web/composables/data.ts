@@ -3,7 +3,7 @@ import { acceptHMRUpdate, defineStore } from 'pinia'
 import type { Data } from '~/types'
 
 export const useDataStore = defineStore('data', () => {
-  const urlData = ref<Data>()
+  const urlData = shallowRef<Data>()
 
   return {
     urlData,

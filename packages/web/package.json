@@ -29,6 +29,7 @@
     "@antfu/eslint-config": "^2.18.0",
     "@antfu/utils": "^0.7.8",
     "@iconify-json/carbon": "^1.1.33",
+    "@iconify-json/svg-spinners": "^1.1.2",
     "@nuxt/eslint": "^0.3.12",
     "@nuxt/image": "^1.7.0",
     "@nuxtjs/color-mode": "^3.4.1",

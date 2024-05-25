@@ -6,7 +6,7 @@ const { urlData } = storeToRefs(dataStore)
 
 <template>
   <div v-if="urlData">
-    <div flex="~ col gap-3" my4>
+    <div flex="~ col gap-3" py4>
       <div relative flex class="group">
         <input
           v-model="urlData.url"

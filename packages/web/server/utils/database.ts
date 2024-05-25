@@ -25,15 +25,22 @@ export async function addUrl(url: string, event: string, data: Record<string, an
 }
 
 /**
- * Retrieves a list of URLs from the database based on the specified date and count.
+ * Retrieves a list of URLs from the database based on the specified date, count, and URL matching string.
  *
  * @param date - The date to filter the URLs by.
  * @param count - The maximum number of URLs to retrieve (default: 10).
+ * @param urlMatch - A string to match URLs (default: '').
  */
-export async function getUrls(date: string, count: number = 10): Promise<Data[]> {
+export async function getUrls(date: string, count: number = 10, urlMatch: string = ''): Promise<Data[]> {
   const db = useDatabase()
 
-  const { rows }: { rows: Data[] } = await db.sql`SELECT * FROM urls WHERE created_at < ${date} ORDER BY created_at DESC LIMIT ${count}`
+  const { rows }: { rows: Data[] } = await db.sql`
+    SELECT * FROM urls 
+    WHERE created_at < ${date} 
+    AND url LIKE ${`%${urlMatch}%`}
+    ORDER BY created_at DESC 
+    LIMIT ${count}
+  `
 
   return rows
 }
