@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { Dropdown } from 'floating-vue'
+
 defineProps<{
   text: string
 }>()
@@ -10,12 +12,12 @@ const { copy, copied } = useClipboard({
 
 <template>
   <div cursor-pointer p4 @click="copy(text)">
-    <VDropdown
+    <Dropdown
       placement="top"
+      auto-hide
       :distance="10"
       :triggers="[]"
       :shown="copied"
-      :auto-hide="true"
     >
       <div i-carbon-copy :class="copied ? 'text-green' : ''" />
       <template #popper>
@@ -23,6 +25,6 @@ const { copy, copied } = useClipboard({
           已複製
         </p>
       </template>
-    </VDropdown>
+    </Dropdown>
   </div>
 </template>

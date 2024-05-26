@@ -7,7 +7,6 @@ export default defineNuxtConfig({
     '@pinia/nuxt',
     '@nuxtjs/color-mode',
     '@nuxt/eslint',
-    'floating-vue/nuxt',
     '@nuxt/image',
   ],
 

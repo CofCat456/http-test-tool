@@ -1,11 +1,11 @@
 <script setup lang="ts">
 import { isDeepEqual } from '@antfu/utils'
+import 'floating-vue/dist/style.css'
+import './style/global.css'
 
 import type { ParseData } from './types'
 
 import { appName } from '~/constants'
-
-import './style/global.css'
 
 const dataStore = useDataStore()
 

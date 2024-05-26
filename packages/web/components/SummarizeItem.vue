@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { Dropdown } from 'floating-vue'
+
 defineProps<{
   icon: string
   color: string
@@ -9,11 +11,11 @@ defineProps<{
 
 <template>
   <div flex="~ items-center">
-    <VDropdown
+    <Dropdown
       placement="top"
+      auto-hide
       :distance="10"
       :triggers="['hover', 'focus']"
-      :auto-hide="true"
     >
       <div
         flex="~ items-center gap-2"
@@ -23,11 +25,11 @@ defineProps<{
         <span v-if="number" min-w-6 :class="`text-${color}`">{{ number || '' }}</span>
       </div>
       <template #popper>
-        <p m2 text-sm text-green font-mono>
+        <p m2 text-sm font-mono>
           {{ number ?? '' }} {{ title }}
         </p>
       </template>
-    </VDropdown>
+    </Dropdown>
     <div v-if="!number" mr-6 />
   </div>
 </template>
