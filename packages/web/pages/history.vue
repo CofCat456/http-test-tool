@@ -43,58 +43,51 @@ watchDeep(urlData, () => {
 </script>
 
 <template>
-  <Suspense>
-    <ClientOnly>
-      <div flex="~ col gap-3" py4>
-        <div relative flex>
-          <input
-            v-model="input"
-            placeholder="Filter matching with url..."
-            border="~ base rounded-full"
-            :class="input ? 'font-mono' : ''"
-            w-full bg-transparent px3 py2 pl10 outline-none
-          >
-          <div absolute bottom-0 left-0 top-0 flex="~ items-center justify-center" p4 op50>
-            <div i-carbon:search />
-          </div>
-        </div>
-        <div text-gray:75>
-          There are a total of <span text-sky>{{ parsedData.length }}</span> records, including
-          <span text-sky>{{ getTotalGetRequests }}  GET</span> requests
-          and <span text-sky>{{ getTotalPostRequests }} POST</span> requests.
-        </div>
-
-        <div flex="~ gap-2 items-center wrap">
-          <div flex-auto />
-          <button
-            px3 btn-action
-            @click="expandAll"
-          >
-            Expand All
-          </button>
-          <button
-            px3 btn-action
-            @click="collapseAll"
-          >
-            Collapse All
-          </button>
-        </div>
-
-        <Loading v-if="pending" />
-        <template v-else-if="!parsedData.length">
-          <div mt5 italic op50>
-            No matched data.
-          </div>
-        </template>
-        <template v-else>
-          <template v-for="item, idx of parsedData" :key="item.id">
-            <HistoryItem v-bind="item" v-model:open="datasState[idx]" :idx />
-          </template>
-        </template>
+  <div flex="~ col gap-3" py4>
+    <div relative flex>
+      <input
+        v-model="input"
+        placeholder="Filter matching with url..."
+        border="~ base rounded-full"
+        :class="input ? 'font-mono' : ''"
+        w-full bg-transparent px3 py2 pl10 outline-none
+      >
+      <div absolute bottom-0 left-0 top-0 flex="~ items-center justify-center" p4 op50>
+        <div i-carbon:search />
       </div>
-    </ClientOnly>
-    <template #fallback>
-      <Loading />
+    </div>
+    <div text-gray:75>
+      There are a total of <span text-sky>{{ parsedData.length }}</span> records, including
+      <span text-sky>{{ getTotalGetRequests }}  GET</span> requests
+      and <span text-sky>{{ getTotalPostRequests }} POST</span> requests.
+    </div>
+
+    <div flex="~ gap-2 items-center wrap">
+      <div flex-auto />
+      <button
+        px3 btn-action
+        @click="expandAll"
+      >
+        Expand All
+      </button>
+      <button
+        px3 btn-action
+        @click="collapseAll"
+      >
+        Collapse All
+      </button>
+    </div>
+
+    <Loading v-if="pending" />
+    <template v-else-if="!parsedData.length">
+      <div mt5 italic op50>
+        No matched data.
+      </div>
     </template>
-  </Suspense>
+    <template v-else>
+      <template v-for="item, idx of parsedData" :key="item.id">
+        <HistoryItem v-bind="item" v-model:open="datasState[idx]" :idx />
+      </template>
+    </template>
+  </div>
 </template>

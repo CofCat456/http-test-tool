@@ -1,14 +1,29 @@
+import { dirname, resolve } from 'node:path'
+import { mkdirSync } from 'node:fs'
+import Database from 'better-sqlite3'
+
 import type { Data } from '~/types'
 
+// eslint-disable-next-line import/no-mutable-exports
+export let db: Database.Database
+
+function sqliteConnector() {
+  const filePath = resolve('.', `.data/${'db'}.sqlite3`)
+  mkdirSync(dirname(filePath), { recursive: true })
+  const _db: Database.Database = new Database(filePath)
+
+  return _db
+}
+
 export function migrateDatabase() {
-  const db = useDatabase()
-  db.sql`CREATE TABLE IF NOT EXISTS urls (
+  db = sqliteConnector()
+  db.prepare(`CREATE TABLE IF NOT EXISTS urls (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     url TEXT,
     event TEXT,
     data TEXT
-  )`
+  )`).run()
 }
 
 /**
@@ -18,10 +33,12 @@ export function migrateDatabase() {
  * @param event - The event associated with the URL.
  * @param data - Additional data to be stored along with the URL.
  */
-export async function addUrl(url: string, event: string, data: Record<string, any>) {
-  const db = useDatabase()
-
-  await db.sql`INSERT INTO urls (url, event, data) VALUES (${url}, ${event}, ${JSON.stringify(data)})`
+export function addUrl(url: string, event: string, data: Record<string, any>): void {
+  db.prepare(`INSERT INTO urls (url, event, data) VALUES (@url, @event, @data)`).run({
+    url,
+    event,
+    data: JSON.stringify(data),
+  })
 }
 
 /**
@@ -31,30 +48,28 @@ export async function addUrl(url: string, event: string, data: Record<string, an
  * @param count - The maximum number of URLs to retrieve (default: 10).
  * @param urlMatch - A string to match URLs (default: '').
  */
-export async function getUrls(date: string, count: number = 10, urlMatch: string = ''): Promise<Data[]> {
-  const db = useDatabase()
-
-  const { rows }: { rows: Data[] } = await db.sql`
-    SELECT * FROM urls 
-    WHERE created_at < ${date} 
-    AND url LIKE ${`%${urlMatch}%`}
-    ORDER BY created_at DESC 
-    LIMIT ${count}
-  `
-
-  return rows
+export function getUrls(date: string, count: number = 10, urlMatch: string = ''): Data[] {
+  return <Data[]>db.prepare(`
+    SELECT * FROM urls
+    WHERE created_at < @date
+    AND url LIKE @urlMatch
+    ORDER BY created_at DESC
+    LIMIT @count
+  `).all({
+    date,
+    count,
+    urlMatch: `%${urlMatch}%`,
+  })
 }
 
 /**
  * Retrieves the latest URL record from the database.
  */
-export async function getLatestUrl() {
-  const db = useDatabase()
-
-  const { rows }: { rows: Data[] } = await db.sql`SELECT * FROM urls ORDER BY created_at DESC LIMIT 1`
+export function getLatestUrl(): Data | null {
+  const rows = db.prepare(`SELECT * FROM urls ORDER BY created_at DESC LIMIT 1`).all()
 
   if (rows.length > 0)
-    return rows[0]
+    return <Data>rows[0]
   else
     return null
 }

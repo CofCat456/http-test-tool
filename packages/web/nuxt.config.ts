@@ -22,6 +22,8 @@ export default defineNuxtConfig({
     '@unocss/reset/tailwind.css',
   ],
 
+  ssr: false,
+
   colorMode: {
     classSuffix: '',
   },
@@ -40,7 +42,6 @@ export default defineNuxtConfig({
     experimental: {
       websocket: true,
       tasks: true,
-      database: true,
     },
   },
 
