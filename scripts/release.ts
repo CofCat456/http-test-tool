@@ -70,4 +70,4 @@ copySync(originalRunScriptMainPath, newUbuntuRunScriptMainPath, { overwrite: tru
 copySync(originalRunShellScriptPath, newUbuntuRunScriptPath, { overwrite: true })
 copySync(originalOutputPath, newUbuntuOutputPath)
 
-consola.success('所有檔案打包完成 !');
+consola.success('所有檔案打包完成 !')

@@ -10,7 +10,8 @@
     "**/*.ts",
     "**/*.tsx",
     "**/*.vue",
-    "eslint.config.mjs"],
+    "eslint.config.mjs"
+  ],
   "exclude": [
     "**/dist/**",
     "**/node_modules/**",
