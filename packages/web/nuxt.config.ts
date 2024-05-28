@@ -40,7 +40,6 @@ export default defineNuxtConfig({
     experimental: {
       websocket: true,
       tasks: true,
-      database: true,
     },
   },
 

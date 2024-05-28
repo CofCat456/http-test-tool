@@ -1,16 +1,24 @@
-let timer: NodeJS.Timeout | null = null
-
 export default defineWebSocketHandler({
   async open(peer) {
-    if (timer)
-      clearInterval(timer)
+    const lastData = getLatestUrl()
+    peer.send(lastData)
 
-    timer = setInterval(async () => {
-      const lastData = await getLatestUrl()
+    db.function('logger', { varargs: true, deterministic: true }, (...values: any[]) => {
+      const [id, created_at, url, event, data] = values
 
-      if (lastData !== null)
-        peer.send(lastData)
-    }, 5000)
+      peer.send({
+        id,
+        created_at,
+        url,
+        event,
+        data,
+      })
+    })
+
+    db.prepare('DROP TRIGGER IF EXISTS insertHook;').run()
+    db.prepare(
+      'CREATE TRIGGER insertHook AFTER INSERT ON urls BEGIN SELECT logger(NEW.id, NEW.created_at, NEW.url, NEW.event, NEW.data); END',
+    ).run()
   },
 },
 )

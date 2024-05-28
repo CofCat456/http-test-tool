@@ -34,6 +34,7 @@
     "@nuxt/image": "^1.7.0",
     "@nuxtjs/color-mode": "^3.4.1",
     "@pinia/nuxt": "^0.5.1",
+    "@types/better-sqlite3": "^7.6.10",
     "@types/ws": "^8.5.10",
     "@unocss/nuxt": "^0.60.3",
     "@vueuse/nuxt": "^10.10.0",
