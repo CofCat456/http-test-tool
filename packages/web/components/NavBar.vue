@@ -1,12 +1,6 @@
 <script setup lang="ts">
 const color = useColorMode()
 
-const dataStore = useDataStore()
-
-const { urlData } = storeToRefs(dataStore)
-
-const lastUpdate = useTimeAgo(() => urlData.value ? useLocalTime(urlData.value.created_at) : '')
-
 function toggleDark() {
   color.preference = color.value === 'dark' ? 'light' : 'dark'
 }
@@ -14,10 +8,7 @@ function toggleDark() {
 
 <template>
   <Badge text-3xl font-200 />
-  <div flex="~ gap-1 items-center wrap" text-sm :class="!lastUpdate && 'animate-pulse'">
-    <span op50>Last Update</span>
-    <span op50>{{ lastUpdate ? lastUpdate : '...' }}</span>
-  </div>
+  <LastUpdateTime />
   <div flex="~ gap-3 items-center wrap" py4>
     <NuxtLink
       to="/"
