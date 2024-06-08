@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import Fuse from 'fuse.js'
+
 import type { Data } from '~/types'
 
 const dataStore = useDataStore()
@@ -7,11 +9,9 @@ const { urlData } = storeToRefs(dataStore)
 
 const date = ref(useDateFormat(useNow(), 'YYYY-MM-DD HH:mm:ss'))
 const datasState = ref<boolean[]>([])
-const input = ref('')
-const urlMatch = refDebounced(input, 1000)
 
 const { data, pending, refresh } = await useFetch<Data[]>('/api/url', {
-  query: { date: date.value, count: 100, urlMatch },
+  query: { date: date.value },
 })
 
 const parsedData = computed(() => data.value
@@ -40,17 +40,39 @@ watchImmediate(parsedData, (newVal) => {
 watchDeep(urlData, () => {
   refresh()
 })
+
+// filter
+const search = ref('')
+const filtered = ref(parsedData.value)
+
+const fuse = computed(() => new Fuse(parsedData.value, {
+  keys: ['created_at', 'url'],
+  threshold: 0.5,
+}))
+
+debouncedWatch(
+  [search, () => parsedData.value],
+  () => {
+    if (search.value.length === 0)
+      return filtered.value = parsedData.value
+
+    filtered.value = fuse.value.search(search.value).map(i => i.item)
+  },
+  {
+    debounce: 200,
+  },
+)
 </script>
 
 <template>
   <div flex="~ col gap-3" py4>
     <div relative flex>
       <input
-        v-model="input"
+        v-model="search"
         placeholder="Filter matching with url..."
         border="~ base rounded-full"
-        :class="input ? 'font-mono' : ''"
-        w-full bg-transparent px3 py2 pl10 outline-none
+        :class="search ? 'font-mono' : ''" w-full bg-transparent px3 py2 pl10
+        outline-none
       >
       <div absolute bottom-0 left-0 top-0 flex="~ items-center justify-center" p4 op50>
         <div i-carbon:search />
@@ -85,7 +107,7 @@ watchDeep(urlData, () => {
       </div>
     </template>
     <template v-else>
-      <template v-for="item, idx of parsedData" :key="item.id">
+      <template v-for="item, idx of filtered" :key="item.id">
         <HistoryItem v-bind="item" v-model:open="datasState[idx]" :idx />
       </template>
     </template>

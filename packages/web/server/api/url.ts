@@ -1,7 +1,7 @@
 import { getUrls } from '~/server/utils/database'
 
-export default defineEventHandler<{ query: { date: string, count: number, urlMatch: string } }>((event) => {
-  const { date, count, urlMatch } = getQuery(event)
+export default defineEventHandler<{ query: { date: string, count: number } }>((event) => {
+  const { date, count } = getQuery(event)
 
-  return getUrls(date, count, urlMatch)
+  return getUrls(date, count)
 })

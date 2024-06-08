@@ -46,19 +46,16 @@ export function addUrl(url: string, event: string, data: Record<string, any>): v
  *
  * @param date - The date to filter the URLs by.
  * @param count - The maximum number of URLs to retrieve (default: 10).
- * @param urlMatch - A string to match URLs (default: '').
  */
-export function getUrls(date: string, count: number = 10, urlMatch: string = ''): Data[] {
+export function getUrls(date: string, count: number = 100): Data[] {
   return <Data[]>db.prepare(`
     SELECT * FROM urls
     WHERE created_at < @date
-    AND url LIKE @urlMatch
     ORDER BY created_at DESC
     LIMIT @count
   `).all({
     date,
     count,
-    urlMatch: `%${urlMatch}%`,
   })
 }
 
